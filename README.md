@@ -26,10 +26,9 @@
            - amount
            - category
            - transactionType
-           - owner
 
  *       properties:
- *         id:
+ *         _id:
  *           type: string
  *           description: The auto-generated id of the transaction
  *         date:
@@ -47,9 +46,7 @@
   *         transactionType:
  *           type: string
  *           description: The transaction transactionType
-  *         owner:
- *           type: string
- *           description: The transaction owner
+
  *       example:
  *          "_id": "6143770b0091aa3c981c312a",
  *           "date": "15.09.2021",
@@ -57,8 +54,7 @@
  *           "amount": 100, 
  *           "category": "salary",
  *           "transactionType": "income",
- *           "__v": 0,
- *           "owner": "61437b7e811ffd554c1a00b1",
+
  */
 
 
@@ -133,11 +129,11 @@
 7. GET - http://localhost:3000/api/v1/user/ - запрос на баланс
 
 // Возвращает при успешном запросе
-// {
-//     "status": "success",
-//     "code": 201,
-//     "balance": 305
-// }
+ {
+    "status": "success",
+    "code": 201,
+    "balance": 305
+}
 
 8. PATCH - http://localhost:3000/api/v1/user/ - запрос на изменение баланса
 

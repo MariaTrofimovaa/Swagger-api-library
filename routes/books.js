@@ -29,16 +29,16 @@ const idLength = 8;
  *         id: d5fE_asz
  *         title: The New Turing Omnibus
  *         author: Alexander K. Dewdney
+ **/
+
+/**
+ * @swagger
+ * tags:
+ *   name: Books
+ *   description: The books managing API
  */
 
- /**
-  * @swagger
-  * tags:
-  *   name: Books
-  *   description: The books managing API
-  */
-
- /**
+/**
  * @swagger
  * /books:
  *   get:
@@ -57,10 +57,10 @@ const idLength = 8;
 
 // 1. Get the books
 router.get("/", (req, res) => {
-    const books = req.app.db.get("books");
+  const books = req.app.db.get("books");
 
-    res.send(books);
-})
+  res.send(books);
+});
 
 // ****************************************************************************************
 
@@ -88,17 +88,16 @@ router.get("/", (req, res) => {
  *         description: The book was not found
  */
 
-
 // 2. Get book by id
 router.get("/:id", (req, res) => {
-    const book = req.app.db.get("books").find({ id: req.params.id }).value();
-    
-      if(!book){
-          res.sendStatus(404)
-      }
+  const book = req.app.db.get("books").find({ id: req.params.id }).value();
 
-    res.send(book);
-})
+  if (!book) {
+    res.sendStatus(404);
+  }
+
+  res.send(book);
+});
 
 /**
  * @swagger
@@ -125,21 +124,19 @@ router.get("/:id", (req, res) => {
 
 // 3. Create new books
 router.post("/", (req, res) => {
+  try {
+    const book = {
+      id: nanoid(idLength),
+      ...req.body,
+    };
+    req.app.db.get("books").push(book).write();
 
-    try {
-        const book = {
-            id: nanoid(idLength),
-            ...req.body,   
-        }
-        req.app.db.get("books").push(book).write()
-
-        res.send(book)
-
-    } catch (error) {
-        // console.log(error);
-        return res.status(500).send(error)
-    }
-})
+    res.send(book);
+  } catch (error) {
+    // console.log(error);
+    return res.status(500).send(error);
+  }
+});
 
 /**
  * @swagger
@@ -173,22 +170,20 @@ router.post("/", (req, res) => {
  *        description: Some error happened
  */
 
-
 // 4. Update the books
 router.put("/:id", (req, res) => {
-	try {
-		req.app.db
-			.get("books")
-			.find({ id: req.params.id })
-			.assign(req.body)
-			.write();
+  try {
+    req.app.db
+      .get("books")
+      .find({ id: req.params.id })
+      .assign(req.body)
+      .write();
 
-		res.send(req.app.db.get("books").find({ id: req.params.id }));
-	} catch (error) {
-		return res.status(500).send(error);
-	}
+    res.send(req.app.db.get("books").find({ id: req.params.id }));
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 });
-
 
 /**
  * @swagger
@@ -203,7 +198,7 @@ router.put("/:id", (req, res) => {
  *           type: string
  *         required: true
  *         description: The book id
- * 
+ *
  *     responses:
  *       200:
  *         description: The book was deleted
@@ -213,9 +208,9 @@ router.put("/:id", (req, res) => {
 
 // 5. Delete the book
 router.delete("/:id", (req, res) => {
-	req.app.db.get("books").remove({ id: req.params.id }).write();
+  req.app.db.get("books").remove({ id: req.params.id }).write();
 
-	res.sendStatus(200);
+  res.sendStatus(200);
 });
 
 module.exports = router;
