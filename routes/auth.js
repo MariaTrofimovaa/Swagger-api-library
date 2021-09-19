@@ -10,8 +10,8 @@ const router = express.Router();
  *       required:
  *         - email
  *         - password
- *         - id - ????
- *         - token - ????
+ *         - id -- ????
+ *         - token -- ????
  *       properties:
  *         id:
  *           type: string
@@ -22,14 +22,10 @@ const router = express.Router();
  *         password:
  *           type: string
  *           description: Urer password
- *  *      id - ????
- *         token - ????
  *       example:
  *         _id: "6144ddead400134d14916c99"
  *         email: "trofimovamariaa@gmail.com"
  *         password: "123123"
- *  *      id - ????
- *         token - ????
  */
 
 /**
@@ -40,9 +36,12 @@ const router = express.Router();
  */
 
 // 1. Запрос на регистрацию пользователя
+
+// В Swagger это будет так?: /api/v1/auth/signup
+
 /**
  * @swagger
- * /auth:
+ * /signup:
  *   post:
  *     summary: Register a new user
  *     tags: [User]
@@ -51,73 +50,145 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Book'
+ *             $ref: '#/components/schemas/Auth'
  *     responses:
- *       200:
- *         description: The book was successfully created
+ *       201:
+ *         description: Successfully registered. Please verify your email!
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Book'
+ *               $ref: '#/components/schemas/Auth'
  *       500:
  *         description: Some server error
- **/
+ */
 router.post("/signup", (req, res) => {
-  try {
-    console.log("signup");
-    res.status(201).json({
-      status: "success",
-      code: 201,
-      message: "Successfully registered. Please verify your email!",
-    });
-  } catch (error) {
-    next(error);
-  }
+  console.log("hello signup");
 });
 
 // 2. Запрос на верификацию email зарегистрированного пользователя
 
+// В Swagger это будет так?: /api/v1/auth/verify/:verifyToken
+
 /**
  * @swagger
- * /books:
+ * /verify/:verifyToken:
  *   get:
- *     summary: Returns the list of all the books
- *     tags: [Books]
+ *     summary: Returns -- so WHAT does it return? token ? --
+ *     tags: [User]
  *     responses:
  *       200:
- *         description: The list of the books
+ *         description: Verification success
  *         content:
  *           application/json:
  *             schema:
- *               type: array
+ *               type: object
  *               items:
- *                 $ref: '#/components/schemas/Book'
+ *                 $ref: '#/components/schemas/Auth'
+ *        401:
+ *          description: Unauthorized
+ *        404:
+ *          description: Not found*
+ *        500:
+ *        description: Some error happened
  */
 
-// router.get("/verify/:verifyToken", (req, res, next) => {
-//   try {
-//     console.log("verify");
-//     // const { verifyToken } = req.params; //считываем токен
-//     // const user = await service.getOne({ verifyToken }); //ищем юзера с таким токеном
-//     // if (!user) {
-//     // если такого юзера нет - выдаем ошибку 404
-//     return res.status(404).json({
-//       status: "error",
-//       code: 404,
-//       message: "Not found***",
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get("/verify/:verifyToken", () => {
+  console.log("hello verify");
+});
 
 // 3. Запрос на логинизацию пользователя
-// router.post("/signin", validation(joiSchema), ctrl.signin);
 
-// // 4. Запрос на получение данных о пользователе
-// router.get("/current", authentificate, ctrl.getCurrentUser);
+// В Swagger это будет так?: /api/v1/auth/signin ? --
 
-// // 5. Запрос на разлогинивание пользователя
-// router.get("/logout", authentificate, ctrl.logout);
+/**
+ * @swagger
+ * /signin:
+ *   post:
+ *     summary: Login a user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Auth'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Auth'
+ *       400:
+ *          description: Wrong email or password / email is not verified
+ *       500:
+ *         description: Some server error
+ */
+
+router.post("/signin", () => {
+  console.log("hello signin");
+});
+
+// 4. Запрос на получение данных о пользователе
+
+// В Swagger это будет так?: /api/v1/auth/current ? --
+
+/**
+ * @swagger
+ * /current:
+ *   get:
+ *     summary: Returns user info
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Auth'
+ *        401:
+ *          description: Unauthorized
+ *        404:
+ *          description: Not found*
+ *        500:
+ *        description: Some error happened
+ */
+
+router.get("/current", () => {
+  console.log("hello current");
+});
+
+ // 5. Запрос на разлогинивание пользователя
+
+// В Swagger это будет так?: /api/v1/auth/logout ? --
+
+/**
+ * @swagger
+ * /logout:
+ *   get:
+ *     summary: Logout user 
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Logout success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Auth'
+ *        401:
+ *          description: Unauthorized
+ *        404:
+ *          description: Not found*
+ *        500:
+ *        description: Some error happened
+ */
+
+router.get("/logout", () => {
+  console.log("hello logout");
+});
 
 module.exports = router;

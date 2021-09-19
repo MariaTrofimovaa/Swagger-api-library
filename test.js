@@ -1,19 +1,19 @@
-// 1. Запрос на регистрацию пользователя _Паша
+// 1.* Запрос на регистрацию пользователя _Паша
 router.post("/signup", validation(joiSchema), ctrl.signup);
 
-// 2. Запрос на верификацию email зарегистрированного пользователя _Паша
+// 2.* Запрос на верификацию email зарегистрированного пользователя _Паша
 router.get("/verify/:verifyToken", ctrl.verifyEmail); //запрос на считывание токена, при переходе юзера по ссылке в письме
 
-// 3. Запрос на логинизацию _Паша
+// 3.* Запрос на логинизацию _Паша
 router.post("/signin", validation(joiSchema), ctrl.signin);
 
-// 4. Запрос на получение данных о пользователе _Паша
+// 4.* Запрос на получение данных о пользователе _Паша
 router.get("/current", authentificate, ctrl.getCurrentUser);
 
-// 5. Запрос на разлогинивание пользователя _Паша
+// 5.* Запрос на разлогинивание пользователя _Паша
 router.get("/logout", authentificate, ctrl.logout);
 
-// 6. Отправка данных о транзакциях (доходы/расходы) _Алена
+// 6.* Отправка данных о транзакциях (доходы/расходы) _Алена
 // ** ДА, ПОКА ЭТО 2 ОТДЕЛЬНЫХ РОУТА **
 router.post("/expense", authentificate,  validation(joiSchema), ctrl.addExpense);
 router.post("/income", authentificate,  validation(joiSchema), ctrl.addIncome);

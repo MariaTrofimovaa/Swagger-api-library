@@ -8,7 +8,7 @@ const swaggerJsDoc = require("swagger-jsdoc");
 
 const booksRouter = require("./routes/books");
 // мои роуты
-// const api = require("./routes/api");
+const auth = require("./routes/api");
 // const api = require("./routes/auth");
 
 const PORT = process.env.PORT || 4000;
@@ -50,7 +50,7 @@ app.use(morgan("dev"));
 
 app.use("/books", booksRouter);
 
-// app.use("/auth", api);
+app.use("/auth", auth);
 // app.use("/api/v1/transactions", api.transactions); //обработчик маршрута transactions
 // app.use("/api/v1/user", api.users);
 

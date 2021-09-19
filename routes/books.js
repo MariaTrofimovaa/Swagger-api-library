@@ -29,6 +29,7 @@ const idLength = 8;
  *         id: d5fE_asz
  *         title: The New Turing Omnibus
  *         author: Alexander K. Dewdney
+ *
  **/
 
 /**
@@ -36,7 +37,7 @@ const idLength = 8;
  * tags:
  *   name: Books
  *   description: The books managing API
- */
+ **/
 
 /**
  * @swagger
@@ -53,7 +54,7 @@ const idLength = 8;
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Book'
- */
+ **/
 
 // 1. Get the books
 router.get("/", (req, res) => {
