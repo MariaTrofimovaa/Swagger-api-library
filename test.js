@@ -40,10 +40,10 @@ router.get("/", authentificate, ctrl.getBalance);
 // 11. Изменить баланс _Света
 router.patch("/", authentificate, ctrl.setBalance);
 
-// 12. Получение данных в сводку по пользователю за год _Таня
+// 12.* Получение данных в сводку по пользователю за год _Таня
 router.get("/:type/currentYear", authentificate, ctrl.getByYear)
 
-// 13. Запрос на получение данных о доходах и расходах за месяц _Миша
+// 13.* Запрос на получение данных о доходах и расходах за месяц _Миша
 router.get("/count/:month", authentificate, ctrl.getCount);
 
 

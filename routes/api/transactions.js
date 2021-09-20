@@ -94,11 +94,60 @@ router.post("/income", () => {
   console.log("expense");
 });
 
+
 // 12. Получение данных в сводку по пользователю за год _Таня
+
+/**
+ * @swagger
+ * /:type/currentYear:
+ *   get:
+ *     summary: Returns brief
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Transactoins'
+ *        401:
+ *          description: Unauthorized
+ *        404:
+ *          description: Not found*
+ *        500:
+ *        description: Some error happened
+ */
+
 router.get("/:type/currentYear", authentificate, ctrl.getByYear);
 router.get("/brief", ctrl.readBrief);
 
+
 // 13. Запрос на получение данных о доходах и расходах за месяц _Миша
+
+/**
+ * @swagger
+ * /count/:month:
+ *   get:
+ *     summary: Returns costs for month
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Transactoins'
+ *        401:
+ *          description: Unauthorized
+ *        404:
+ *          description: Not found*
+ *        500:
+ *        description: Some error happened
+ */
 router.get("/count/:month", ctrl.getCount);
 
 module.exports = router;
